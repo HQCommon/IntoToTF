@@ -23,6 +23,7 @@ if __name__=="__main__":
     path_to_test = "D:\\VSC\\IntoToTF\\Dataset\\archive\\Test"
     batch_size = 64
     epochs = 15
+    lr = 0.0001
     
     train_generator, val_generator, test_generator = create_generators(batch_size, path_to_train, path_to_val, path_to_test)
     nbr_classes = train_generator.num_classes
@@ -51,7 +52,8 @@ if __name__=="__main__":
 
         model = streetsigns_model(nbr_classes)
 
-        model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
+        model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
         model.fit(
             train_generator,
